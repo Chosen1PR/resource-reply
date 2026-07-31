@@ -63,6 +63,10 @@ Resources can be backed up to a wiki page (named "resource-reply") by enabling t
 
 ## Changelog
 
+### [0.2.14] (2026-07-31)
+
+- Removed the Settings menu item at subreddit level for a cleaner menu. Settings are still accessible from desktop Mod Tools and developers.reddit.com.
+
 ### [0.2.13] (2026-07-02)
 
 - Implemented a workaround for when Devvit passes invalid usernames and/or comment bodies.

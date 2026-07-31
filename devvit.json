@@ -65,15 +65,6 @@
   "menu": {
     "items": [
       {
-        "label": "Resource Reply",
-        "description": "Settings",
-        "forUserType": "moderator",
-        "location": [
-          "subreddit"
-        ],
-        "endpoint": "/internal/menu/app-settings"
-      },
-      {
         "label": "Reply with resource",
         "forUserType": "user",
         "location": [

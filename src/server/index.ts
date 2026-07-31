@@ -43,13 +43,6 @@ app.use(express.text());
 
 const router = express.Router();
 
-// Menu item for app settings
-router.post("/internal/menu/app-settings", async (_req, res): Promise<void> => {
-  res.json({
-    navigateTo: `https://developers.reddit.com/r/${context.subredditName}/apps/${context.appSlug}`,
-  });
-});
-
 // Menu item which launches Comment Resource form
 router.post("/internal/menu/comment-resource", async (req, res) => {
   const summonerName = context.username!;
