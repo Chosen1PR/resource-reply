@@ -71,6 +71,7 @@ Resources can be backed up to a wiki page (named "resource-reply") by enabling t
 - Added an option for the message "A moderator of r/[subreddit] suggested the following resource:" to be automatically added to the beginning of resources shared by mods. This could make the comments appear less automated.
 - Added the ability to make resource sharing only possible by users with specific user flairs.
 - Fixed an issue that could have *potentially* caused site-banned/shadowbanned accounts to be able to share resources.
+- Removed the now-unnecessary username field from the pop-up.
 
 ### [0.2.15] (2026-07-31)
 
