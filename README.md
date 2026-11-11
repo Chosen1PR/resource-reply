@@ -2,13 +2,15 @@
 
 This app allows users to reply to a post or comment with a helpful resource that is saved at the subreddit level by moderators. The app account will reply with a saved resource similar to how AutoModerator can reply with a pre-defined comment when summoned by a specific keyword or command (e.g., "!summon"). With Resource Reply, however, you can leave out those clunky commands and simply use a menu item from a post or comment's context menu (a.k.a. the "..." menu). This also ensures that the app account replies directly to the original poster or commenter, and not the user who summoned it.
 
-Additionally, mods can choose:
+Additionally, mods can choose whether to:
 
-- whether to allow users to pin a resource comment to a post if they're replying directly to it.
-- whether to lock replies to resource comments by default.
-- whether to hide their username and simply share the resource as the app account.
+- allow users to pin a resource comment to a post if they're replying directly to it.
+- lock replies to resource comments by default.
+- hide usernames for mods and simply share resources as the app account.
+- restrict resource sharing to users with specific user flairs.
+- edit or remove the postscript message attached to the end of every resource.
 
-To prevent abuse, the app account will still name the user who summoned it. Banned users will also be unable to summon the app.
+To prevent abuse, the app account will still name the user who summoned it (as long as they aren't a mod). Banned users will also be unable to summon the app.
 
 ---
 
@@ -62,6 +64,13 @@ Resources can be backed up to a wiki page (named "resource-reply") by enabling t
 ---
 
 ## Changelog
+
+### [0.3.0] (2026-11-11)
+
+- Added the ability for mods to edit or entirely remove the postscript message that is automatically appended to the end of a resource.
+- Added an option for the message "A moderator of r/[subreddit] suggested the following resource:" to be automatically added to the beginning of resources shared by mods. This could make the comments appear less automated.
+- Added the ability to make resource sharing only possible by users with specific user flairs.
+- Fixed an issue that could have *potentially* caused site-banned/shadowbanned accounts to be able to share resources.
 
 ### [0.2.15] (2026-07-31)
 

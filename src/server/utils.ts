@@ -53,26 +53,42 @@ export async function getAllResources() {
 export async function buildResourceComment(resourceText: string, summonerUsername: string) {
   const userIsMod = await isUserMod(summonerUsername);
   if (userIsMod) {
-    const anonymizeMods = await settings.get<boolean>("anonymizeMods");
-    if (anonymizeMods) {
-      return resourceText.toString();
-    }
-    else {
-      return buildResourceCommentAsUser(resourceText, summonerUsername);
-    }
+    return await buildResourceCommentAsMod(resourceText, summonerUsername);
   }
-  else return buildResourceCommentAsUser(resourceText, summonerUsername);
+  else { // user is not a mod
+    return await buildResourceCommentAsUser(resourceText, summonerUsername);
+  }
 }
 
 // Helper function to build comment body when the summoner is not a mod (or mods are not anonymized)
-function buildResourceCommentAsUser(resourceText: string, summonerUsername: string) {
-  const pretext = `u/${summonerUsername} has suggested the following resource:\n\n`;
-  var posttext = `\n\n^*I am a bot that was summoned by user ${summonerUsername}. `
-    + `If ${summonerUsername} wishes to delete this comment, they can reply "!delete" \\(without quotes or spaces). `
-    + `If this comment is inappropriate, please report it and the moderator(s) will review.*`;
-  posttext = posttext.replace(/ /g, `&nbsp;`);
-  //posttext = posttext.replace(/ /g, ` ^`);
-  return pretext + resourceText + posttext;
+async function buildResourceCommentAsMod(resourceText: string, modUsername: string) {
+  const anonymizeMods = (await settings.get<boolean>("anonymizeMods")) ?? true;
+  const includePretext = (await settings.get<boolean>("includeModDisclaimer")) ?? false;
+  if (anonymizeMods) {
+    if (includePretext) {
+      const pretext = `A moderator of r/${context.subredditName!} suggested the following resource:`;
+      return `${pretext}\n\n${resourceText}`;
+    }
+    else { // don't include pretext
+      return resourceText.toString();
+    }
+  }
+  else { // don't anonymize mods
+    return await buildResourceCommentAsUser(resourceText, modUsername);
+  }
+}
+
+// Helper function to build comment body when the summoner is not a mod (or mods are not anonymized)
+async function buildResourceCommentAsUser(resourceText: string, summonerUsername: string) {
+  const pretext = `u/${summonerUsername} suggested the following resource:`;
+  let posttext = (await settings.get<string>("disclaimerMsg")) ?? '';
+  if (posttext.trim() != '') {
+    posttext = posttext.replaceAll('{summoner_name}', summonerUsername);
+    return `${pretext}\n\n${resourceText}\n\n${posttext}`;
+  }
+  else { // posttext is empty
+    return `${pretext}\n\n${resourceText}`;
+  }
 }
 
 // Helper function to submit the resource comment and handle pinning/locking
@@ -114,6 +130,24 @@ export async function isUserMod(username: string) {
 export async function isUserBanned(username: string) {
   const bannedUser = await reddit.getBannedUsers({ subredditName: context.subredditName, username: username }).all();
   return (bannedUser.length > 0);
+}
+
+export async function isUserAuthorizedByFlair(username: string) {
+  const trustedUserFlairs = (await settings.get<string>("trustedUserFlairs")) ?? '';
+  if (trustedUserFlairs.trim() == '') return true; // no list of flairs in settings; no restrictions
+  const user = await reddit.getUserByUsername(username);
+  if (!user) return false; // user shadowbanned or invalid
+  const flairObject = await  user.getUserFlairBySubreddit(context.subredditName!);
+  if (!flairObject) return false; // no user flair
+  const flairText = flairObject.flairText;
+  if (flairText == undefined || flairText.trim() == '') return false; // empty flair text
+  // Search user flair for any keyword or phrase from settings.
+  const trustedFlairList = trustedUserFlairs.split(',');
+  for (let trustedFlair of trustedFlairList) {
+    trustedFlair = trustedFlair.trim(); // remove leading and trailing whitespace
+    if (flairText.includes(trustedFlair)) return true;
+  }
+  return false; // reached end of loop; flair not found
 }
 
 // Helper function to check for conditions that would prevent a resource comment from being posted,

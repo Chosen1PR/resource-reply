@@ -16,6 +16,7 @@ import {
   isUserMod,
   commentResource,
   isUserBanned,
+  isUserAuthorizedByFlair,
   preCommentError,
   getPostOrComment,
   getRequestBodyValue,
@@ -50,7 +51,7 @@ router.post("/internal/menu/comment-resource", async (req, res) => {
   const isPost = targetId.startsWith("t3_");
   if (await isUserBanned(summonerName)) {
     res.json({
-      showToast: 'You are banned from this subreddit and cannot suggest resources.'
+      showToast: 'You are banned from this subreddit and cannot share resources.'
     });
     return;
   }
@@ -72,6 +73,13 @@ router.post("/internal/menu/comment-resource", async (req, res) => {
   }
   const targetAuthorIsMod = await isUserMod(targetPostOrComment.authorName);
   const summonerIsMod = await isUserMod(summonerName);
+  const userIsAuthorized = await isUserAuthorizedByFlair(summonerName);
+  if (!summonerIsMod && !userIsAuthorized) {
+    res.json({
+      showToast: 'You are not authorized to share resources.'
+    });
+    return;
+  }
   if (targetPostOrComment.isLocked() && !summonerIsMod) {
     res.json({
       showToast: `This ${targetKind} is locked.`
@@ -151,7 +159,7 @@ router.post("/internal/menu/comment-resource", async (req, res) => {
             type: 'string',
             name: 'summonerName',
             label: 'Your username',
-            helpText: 'This will be included in the comment to indicate who suggested the resource.',
+            helpText: 'This will be included in the comment to indicate who shared the resource.',
             defaultValue: context.username!,
             required: true,
             disabled: true

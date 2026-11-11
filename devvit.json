@@ -20,8 +20,20 @@
     "subreddit": {
       "resourceConfig": {
         "type": "paragraph",
-        "label": "Resource Configuration",
+        "label": "Resource configuration",
         "helpText": "See the full instructions at https://developers.reddit.com/apps/resource-reply for details on how to configure resources. Drag the lower right corner of this field on desktop to expand it for easier editing.",
+        "defaultValue": ""
+      },
+      "disclaimerMsg": {
+        "type": "paragraph",
+        "label": "Disclaimer message",
+        "helpText": "A disclaimer message is recommended to let users know 1) that the app account is automated, and 2) that the app's comment can be deleted by the user who summoned it with the \"!delete\" command. Configure this message below using Markdown. You can use the {summoner_name} macro to get the summoner's username.",
+        "defaultValue": "*I am a bot that was summoned by /u/{summoner_name}. If {summoner_name} wishes to delete this comment, they can reply \"!delete\" (without quotes or spaces). If this comment is inappropriate, please report it and the moderator(s) will review.*"
+      },
+      "trustedUserFlairs": {
+        "type": "paragraph",
+        "label": "Trusted user flairs",
+        "helpText": "Optional. Comma-delimited list of keywords or phrases (case-sensitive) for user flair text. Only users with flair containing these words/phrases will be allowed to share resources. If left blank, everyone will be able to share resources.",
         "defaultValue": ""
       },
       "backupToWiki": {
@@ -42,23 +54,41 @@
         "helpText": "If enabled, all resource replies will be locked to prevent further replies. This would prevent users from being able to delete their resource replies with the \"!delete\" command.",
         "defaultValue": false
       },
-      "anonymizeMods": {
-        "type": "boolean",
-        "label": "Anonymize moderators",
-        "helpText": "If enabled, moderator usernames will be hidden when suggesting resources.",
-        "defaultValue": true
+      "modUsernameSettings": {
+        "type": "group",
+        "label": "Mod Username Display Settings",
+        "fields": {
+          "anonymizeMods": {
+            "type": "boolean",
+            "label": "Anonymize moderators",
+            "helpText": "If enabled, moderator usernames will be hidden when sharing resources.",
+            "defaultValue": true
+          },
+          "includeModDisclaimer": {
+            "type": "boolean",
+            "label": "Include mod disclaimer",
+            "helpText": "If enabled, a short disclaimer containing the words \"A moderator of r/[subreddit] suggested the following resource:\" will display at the beginning of every resource comment submitted by a mod. Only works if the above setting \"Anonymize moderators\" is also enabled.",
+            "defaultValue": false
+          }
+        }
       },
-      "allowRepliesToMods": {
-        "type": "boolean",
-        "label": "Allow users to reply to mods",
-        "helpText": "If enabled, users can reply directly to mods with resources. Mods can still reply anywhere.",
-        "defaultValue": true
-      },
-      "allowOnModSubmissions": {
-        "type": "boolean",
-        "label": "Allow users to reply anywhere on mod posts",
-        "helpText": "If enabled, users can reply to comments in mod posts with resources. Mods can still reply anywhere. You could disable this for announcement posts, for example.",
-        "defaultValue": true
+      "modReplySettings": {
+        "type": "group",
+        "label": "Reply-to-Mod Settings",
+        "fields": {
+          "allowRepliesToMods": {
+            "type": "boolean",
+            "label": "Allow users to reply to mods",
+            "helpText": "If enabled, users can reply directly to mods with resources. Mods can still reply anywhere.",
+            "defaultValue": true
+          },
+          "allowOnModSubmissions": {
+            "type": "boolean",
+            "label": "Allow users to reply anywhere on mod posts",
+            "helpText": "If enabled, users can reply to comments in mod posts with resources. Mods can still reply anywhere. You could disable this for announcement posts, for example.",
+            "defaultValue": true
+          }
+        }
       }
     }
   },
