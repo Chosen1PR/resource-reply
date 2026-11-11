@@ -66,7 +66,7 @@ async function buildResourceCommentAsMod(resourceText: string, modUsername: stri
   const includePretext = (await settings.get<boolean>("includeModDisclaimer")) ?? false;
   if (anonymizeMods) {
     if (includePretext) {
-      const pretext = `A moderator of r/${context.subredditName!} suggested the following resource:`;
+      const pretext = `A moderator of /r/${context.subredditName!} suggested the following resource:`;
       return `${pretext}\n\n${resourceText}`;
     }
     else { // don't include pretext

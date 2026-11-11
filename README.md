@@ -65,7 +65,7 @@ Resources can be backed up to a wiki page (named "resource-reply") by enabling t
 
 ## Changelog
 
-### [0.3.0] (2026-11-11)
+### [0.3.1] (2026-11-11)
 
 - Added the ability for mods to edit or entirely remove the postscript message that is automatically appended to the end of a resource.
 - Added an option for the message "A moderator of r/[subreddit] suggested the following resource:" to be automatically added to the beginning of resources shared by mods. This could make the comments appear less automated.
