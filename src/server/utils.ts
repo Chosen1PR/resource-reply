@@ -80,7 +80,7 @@ async function buildResourceCommentAsMod(resourceText: string, modUsername: stri
 
 // Helper function to build comment body when the summoner is not a mod (or mods are not anonymized)
 async function buildResourceCommentAsUser(resourceText: string, summonerUsername: string) {
-  const pretext = `u/${summonerUsername} suggested the following resource:`;
+  const pretext = `/u/${summonerUsername} suggested the following resource:`;
   let posttext = (await settings.get<string>("disclaimerMsg")) ?? '';
   if (posttext.trim() != '') {
     posttext = posttext.replaceAll('{summoner_name}', summonerUsername);

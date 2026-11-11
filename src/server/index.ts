@@ -24,11 +24,11 @@ import {
   isValidUsername
 } from "./utils";
 
-import {
-  cacheSummoner,
-  getTargetIdFromSummonerCache,
-  deleteSummonerCache
-} from "./redis";
+//import {
+//  cacheSummoner,
+//  getTargetIdFromSummonerCache,
+//  deleteSummonerCache
+//} from "./redis";
 
 //import type { Request, Response } from 'express';
 //import { UiResponse } from '@devvit/web/shared';
@@ -45,9 +45,10 @@ app.use(express.text());
 const router = express.Router();
 
 // Menu item which launches Comment Resource form
-router.post("/internal/menu/comment-resource", async (req, res) => {
+router.post("/internal/menu/comment-resource", async (_req, res) => {
   const summonerName = context.username!;
-  const targetId = getRequestBodyValue(req.body, ['targetId']);
+  const targetId = context.commentId ?? context.postId! as string;
+  //console.log(`Target ID: ${targetId}`);
   const isPost = targetId.startsWith("t3_");
   if (await isUserBanned(summonerName)) {
     res.json({
@@ -130,7 +131,7 @@ router.post("/internal/menu/comment-resource", async (req, res) => {
     });
     return;
   }
-  await cacheSummoner(summonerName, targetId);
+  //await cacheSummoner(summonerName, targetId);
   res.json({
     showForm: {
       name: 'commentResourceForm',
@@ -154,7 +155,7 @@ router.post("/internal/menu/comment-resource", async (req, res) => {
             helpText: 'Only applicable when replying to a post. Setting may be disabled by mods.',
             defaultValue: false,
             disabled: (!pinSetting || !isPost)
-          },
+          }/*,
           {
             type: 'string',
             name: 'summonerName',
@@ -186,8 +187,10 @@ router.post("/internal/menu/comment-resource", async (req, res) => {
 
 // Form submission handler which can launch second form for editing saved response comment
 router.post("/internal/forms/comment-resource-submit", async (req, res) => {
-  const { resource, pinReply, summonerName } = req.body;
-  const targetId = await getTargetIdFromSummonerCache(summonerName);
+  const { resource, pinReply } = req.body;
+  const summonerName = context.username!;
+  const targetId = context.commentId ?? context.postId! as string;
+  //console.log(`Target ID: ${targetId}`);
   try {
     const preCommentErr = await preCommentError(targetId, pinReply);
     if (preCommentErr == "none") {
@@ -201,13 +204,13 @@ router.post("/internal/forms/comment-resource-submit", async (req, res) => {
         showToast: preCommentErr
       });
     }
-    await deleteSummonerCache(summonerName);
+    //await deleteSummonerCache(summonerName);
   }
   catch (error) {
     res.json({
       showToast: 'Error: Could not submit comment.'
     });
-    await deleteSummonerCache(summonerName);
+    //await deleteSummonerCache(summonerName);
     console.log(error);
   }
 });
@@ -236,6 +239,8 @@ router.post('/internal/triggers/on-comment-create', async (req, _res) => {
     var summonerName = '';
     if (parentComment.body.startsWith('u/'))
       summonerName = parentComment.body.substring(2, parentComment.body.indexOf(' '));
+    else if (parentComment.body.startsWith('/u/'))
+      summonerName = parentComment.body.substring(3, parentComment.body.indexOf(' '));
     const userIsMod = await isUserMod(commentAuthorName);
     const userIsSummoner = (commentAuthorName == summonerName);
     if (userIsMod) {
