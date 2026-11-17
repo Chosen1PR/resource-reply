@@ -27,8 +27,8 @@
       "disclaimerMsg": {
         "type": "paragraph",
         "label": "Disclaimer message",
-        "helpText": "A disclaimer message is recommended to let users know 1) that the app account is automated, and 2) that the app's comment can be deleted by the user who summoned it with the \"!delete\" command. Configure this message below using Markdown. You can use the {summoner_name} macro to get the summoner's username.",
-        "defaultValue": "*I am a bot that was summoned by /u/{summoner_name}. If {summoner_name} wishes to delete this comment, they can reply \"!delete\" (without quotes or spaces). If this comment is inappropriate, please report it and the moderator(s) will review.*"
+        "helpText": "A disclaimer message is recommended to let users know that 1) the app account is automated, and 2) the app's comment can be deleted by the user who summoned it with the \"!delete\" command. Configure this message below using Markdown. You can also use the {summoner_name} macro to get the username of the user who summoned the app.",
+        "defaultValue": "*I am a bot that was summoned by /u/{summoner_name}. If {summoner_name} wishes to delete this comment, they can reply \"!delete\" (without quotes or spaces).*"
       },
       "trustedUserFlairs": {
         "type": "paragraph",
