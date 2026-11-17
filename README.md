@@ -8,7 +8,7 @@ Additionally, mods can choose whether to:
 - lock replies to resource comments by default.
 - hide usernames for mods and simply share resources as the app account.
 - restrict resource sharing to users with specific user flairs.
-- edit or remove the postscript message attached to the end of every resource.
+- edit or remove the disclaimer message attached to the end of every resource.
 
 To prevent abuse, the app account will still name the user who summoned it (as long as they aren't a mod). Banned users will also be unable to summon the app.
 
@@ -67,11 +67,12 @@ Resources can be backed up to a wiki page (named "resource-reply") by enabling t
 
 ### [0.3.2] (2026-11-17)
 
-- Shortened the default postscript message slightly. It remains editable by mods; this only affects the default setting.
+- Better word choice in initial sentence: changed "suggested the following resource" to "recommended the following resource."
+- Shortened the default disclaimer message slightly. It remains editable by mods; this only affects the default setting.
 
 ### [0.3.1] (2026-11-11)
 
-- Added the ability for mods to edit or entirely remove the postscript message that is automatically appended to the end of a resource.
+- Added the ability for mods to edit or entirely remove the disclaimer message that is automatically appended to the end of a resource.
 - Added an option for the message "A moderator of r/[subreddit] suggested the following resource:" to be automatically added to the beginning of resources shared by mods. This could make the comments appear less automated.
 - Added the ability to make resource sharing only possible by users with specific user flairs.
 - Fixed an issue that could have *potentially* caused site-banned/shadowbanned accounts to be able to share resources.

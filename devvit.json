@@ -67,7 +67,7 @@
           "includeModDisclaimer": {
             "type": "boolean",
             "label": "Include mod disclaimer",
-            "helpText": "If enabled, a short disclaimer containing the words \"A moderator of r/[subreddit] suggested the following resource:\" will display at the beginning of every resource comment submitted by a mod. Only works if the above setting \"Anonymize moderators\" is also enabled.",
+            "helpText": "If enabled, a short disclaimer containing the words \"A moderator of r/[subreddit] recommended the following resource:\" will display at the beginning of every resource comment submitted by a mod. Only works if the above \"Anonymize moderators\" setting is also enabled.",
             "defaultValue": false
           }
         }
