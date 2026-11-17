@@ -67,13 +67,13 @@ Resources can be backed up to a wiki page (named "resource-reply") by enabling t
 
 ### [0.3.2] (2026-11-17)
 
-- Better word choice in initial sentence: changed "suggested the following resource" to "recommended the following resource."
-- Shortened the default disclaimer message slightly. It remains editable by mods; this only affects the default setting.
+- Better wording in initial sentence: changed "suggested the following resource" to "shared the following resource" for users and "recommended the following resource" for mods (if the mod disclaimer message is enabled).
+- Shortened the default disclaimer message slightly to reduce verbosity. It remains editable by mods; this only affects the default setting.
 
 ### [0.3.1] (2026-11-11)
 
 - Added the ability for mods to edit or entirely remove the disclaimer message that is automatically appended to the end of a resource.
-- Added an option for the message "A moderator of r/[subreddit] suggested the following resource:" to be automatically added to the beginning of resources shared by mods. This could make the comments appear less automated.
+- Added an option for a mod disclaimer message to be automatically added to the beginning of resources shared by mods. This could make the comments appear less automated.
 - Added the ability to make resource sharing only possible by users with specific user flairs.
 - Fixed an issue that could have *potentially* caused site-banned/shadowbanned accounts to be able to share resources.
 - Removed the username field from the pop-up form.

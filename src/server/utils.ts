@@ -49,7 +49,7 @@ export async function getAllResources() {
   return allResources;
 }
 
-// Helper function to build the comment body for a resource recommendation
+// Helper function to build the comment body for a resource suggestion
 export async function buildResourceComment(resourceText: string, summonerUsername: string) {
   const userIsMod = await isUserMod(summonerUsername);
   if (userIsMod) {
@@ -66,7 +66,7 @@ async function buildResourceCommentAsMod(resourceText: string, modUsername: stri
   const includePretext = (await settings.get<boolean>("includeModDisclaimer")) ?? false;
   if (anonymizeMods) {
     if (includePretext) {
-      const pretext = `A moderator of /r/${context.subredditName!} recommended the following resource:`;
+      const pretext = `A moderator of /r/${context.subredditName!} shared the following resource:`;
       return `${pretext}\n\n${resourceText}`;
     }
     else { // don't include pretext
@@ -80,7 +80,7 @@ async function buildResourceCommentAsMod(resourceText: string, modUsername: stri
 
 // Helper function to build comment body when the summoner is not a mod (or mods are not anonymized)
 async function buildResourceCommentAsUser(resourceText: string, summonerUsername: string) {
-  const pretext = `/u/${summonerUsername} recommended the following resource:`;
+  const pretext = `/u/${summonerUsername} shared the following resource:`;
   let posttext = (await settings.get<string>("disclaimerMsg")) ?? '';
   if (posttext.trim() != '') {
     posttext = posttext.replaceAll('{summoner_name}', summonerUsername);
